@@ -1,7 +1,6 @@
 package project.gpstrack.server.position;
 
 
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,13 +18,24 @@ public class PositionController {
         return positionService.create(position);
     }
 
-    @GetMapping("/search/{id}")
+    @GetMapping("/getPosition")
     public Optional<Position> search(@RequestParam("id") String id){
         return positionService.search(id);
     }
 
-    @GetMapping("/")
-    public List<Position> findAll() {
-        return positionService.findAll();
+    @DeleteMapping("/delete")
+    public void deletePosition(@RequestParam("id") String id){
+        positionService.deletePosition(id);
     }
+
+    @GetMapping("/")
+    public List<Position> getAllPositions() {
+        return positionService.getAllPositions();
+    }
+
+    @PutMapping("/updatePosition")
+    public Position updatePositon(@RequestParam("id") String id, @RequestBody Position position){
+        return positionService.updatePosition(id, position);
+    }
+
 }
