@@ -23,16 +23,6 @@ public class ServerApplication {
         SpringApplication.run(ServerApplication.class, args);
     }
 
-    public void run(String... args){
-        Position position = new Position();
-        position.setLatitude("0.450000");
-        position.setLongitude("8.3440000");
-        position.setTerminalId("12");
-        Timestamp stamp = new Timestamp(System.currentTimeMillis());
-        position.setCreationDate(new Date(stamp.getTime()));
-        new PositionService().create(position);
-    }
-
     @Bean
     public Docket apiTest() {
         return new Docket(DocumentationType.SWAGGER_2).select()
