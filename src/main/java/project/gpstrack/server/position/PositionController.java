@@ -3,12 +3,14 @@ package project.gpstrack.server.position;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import project.gpstrack.server.login.SecuredController;
 
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/positions")
 public class PositionController {
