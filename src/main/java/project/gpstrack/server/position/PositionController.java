@@ -3,7 +3,6 @@ package project.gpstrack.server.position;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import project.gpstrack.server.login.SecuredController;
 
 import java.text.ParseException;
 import java.util.Date;
@@ -22,9 +21,9 @@ public class PositionController {
         return positionService.create(position);
     }
 
-    @GetMapping("/getPosition")
-    public Optional<Position> search(@RequestParam("id") String id){
-        return positionService.search(id);
+    @GetMapping("/getPositions")
+    public List<Position> search(@RequestParam("username") String username){
+        return positionService.search(username);
     }
 
     @DeleteMapping("/delete")
@@ -47,6 +46,11 @@ public class PositionController {
                                        @RequestParam("startDate") String startDate,
                                        @RequestParam("finalDate") String finalDate) throws ParseException {
         return positionService.getLocations(terminalId, startDate, finalDate);
+    }
+
+    @DeleteMapping("/deleteAll")
+    public void deleteLocations(){
+        positionService.deleteAllPosition();
     }
 
 }

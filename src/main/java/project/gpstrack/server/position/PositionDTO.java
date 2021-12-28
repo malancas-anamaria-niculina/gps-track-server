@@ -7,8 +7,11 @@ import java.util.Date;
 @Data
 public class PositionDTO {
     private String terminalId;
-    private String latitude;
-    private String longitude;
+
+    private String user;
+
+    private double latitude;
+    private double longitude;
 
     private Date creationDate;
 }

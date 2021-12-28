@@ -15,9 +15,11 @@ public class Position {
     @Id
     private String id;
 
+    private String user;
+
     private String terminalId;
-    private String latitude;
-    private String longitude;
+    private double latitude;
+    private double longitude;
 
     private Date creationDate;
 }

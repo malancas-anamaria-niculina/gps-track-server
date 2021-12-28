@@ -26,8 +26,9 @@ public class PositionService {
         position1.setLatitude(position.getLatitude());
         position1.setLongitude(position.getLongitude());
         position1.setTerminalId(position.getTerminalId());
+        position1.setUser(position.getUser());
 
-        position.setCreationDate(new Date(System.currentTimeMillis()));
+        position1.setCreationDate(new Date(System.currentTimeMillis()));
         return positionRepository.save(position1);
     }
 
@@ -35,16 +36,24 @@ public class PositionService {
         positionRepository.deleteById(id);
     }
 
+    public void deleteAllPosition(){
+        positionRepository.deleteAll();
+    }
+
     public List<Position> getAllPositions(){return positionRepository.findAll();}
 
-    public Optional<Position> search(String id){return positionRepository.findById(id);}
+    public List<Position> search(String user){
+        Criteria c = Criteria.where("user").is(user);
+        Query querry = new Query(c);
+        return mongoTemplate.find(querry, Position.class);
+    }
 
     public List<Position> getLocations(String terminalId, String startDate, String finalDate) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date sd = new Date(sdf.parse(startDate).getTime());
         Date fd = new Date(sdf.parse(finalDate).getTime());
         Criteria c = Criteria.where("terminalId").is(terminalId)
-                .andOperator(Criteria.where("creationDate").gte(sd),
+                    .andOperator(Criteria.where("creationDate").gte(sd),
                             Criteria.where("creationDate").lt(fd));
         Query querry = new Query(c);
 
