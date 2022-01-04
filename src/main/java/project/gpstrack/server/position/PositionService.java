@@ -3,16 +3,12 @@ package project.gpstrack.server.position;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.Optional;
 
 @Data
 @Service
@@ -43,21 +39,14 @@ public class PositionService {
     public List<Position> getAllPositions(){return positionRepository.findAll();}
 
     public List<Position> search(String user){
-        Criteria c = Criteria.where("user").is(user);
-        Query querry = new Query(c);
-        return mongoTemplate.find(querry, Position.class);
+
+        return positionRepository.searchPositionByUser(user);
     }
 
     public List<Position> getLocations(String terminalId, String startDate, String finalDate) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date sd = new Date(sdf.parse(startDate).getTime());
-        Date fd = new Date(sdf.parse(finalDate).getTime());
-        Criteria c = Criteria.where("terminalId").is(terminalId)
-                    .andOperator(Criteria.where("creationDate").gte(sd),
-                            Criteria.where("creationDate").lt(fd));
-        Query querry = new Query(c);
 
-        return mongoTemplate.find(querry, Position.class);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return positionRepository.getPosition(terminalId, new Date(sdf.parse(startDate).getTime()), new Date(sdf.parse(finalDate).getTime()));
     }
 
     public Position updatePosition(String id, PositionDTO position){

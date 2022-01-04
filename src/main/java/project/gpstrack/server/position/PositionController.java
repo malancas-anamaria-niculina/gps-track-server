@@ -21,7 +21,7 @@ public class PositionController {
         return positionService.create(position);
     }
 
-    @GetMapping("/getPositions")
+    @GetMapping("/getTerminalIds")
     public List<Position> search(@RequestParam("username") String username){
         return positionService.search(username);
     }
