@@ -2,7 +2,6 @@ package project.gpstrack.server.position;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -15,7 +14,6 @@ import java.util.List;
 public class PositionService {
     @Autowired
     private PositionRepository positionRepository;
-    @Autowired private MongoTemplate mongoTemplate;
 
     public Position create(PositionDTO position){
         Position position1 = new Position();
